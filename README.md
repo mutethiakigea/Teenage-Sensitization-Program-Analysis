@@ -1,5 +1,5 @@
 # Teenage-Sensitization-Program-Analysis
-The Clemency Foundation conducted a Research Analysis to assess the impact of its interventions on teenagers residing in the slums of Nairobi. As a dedicated non-profit organization, Clemency was deeply committed to improving the lives of these young individuals. This comprehensive study aimed to determine the effectiveness of the organization's multifaceted initiatives.
+The Clemency Foundation, a CBO, conducted a Research Analysis to assess the impact of its interventions on teenagers residing in the slums of Nairobi. As a dedicated non-profit organization, Clemency was deeply committed to improving the lives of these young individuals. This comprehensive study aimed to determine the effectiveness of the organization's multifaceted initiatives.
 
 The research involved meticulous data collection on students' academic performance, including attendance, academic records, and test scores. In addition to educational metrics, Clemency provided vital assistance, including clothing, counseling services for those experiencing depression, and the distribution of nutritious food resources.
 
