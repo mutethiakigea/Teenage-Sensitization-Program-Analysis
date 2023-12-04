@@ -1,0 +1,129 @@
+---
+title: "INTERVENTIONS ANALYSIS"
+output: html_notebook
+---
+
+---
+Introduction Document
+With the help of meals and sanitary pads, the Clemency Foundation's new initiative in Nairobi seeks to educate young people living in slums about the dangers of having sex too soon. The organization aims to promote cooperation, guarantee data integrity, and ease evidence-based decision-making for long-term effects and ongoing improvement through a comprehensive Monitoring and Evaluation (M&E) Plan.
+A nonprofit organization called Clemency Foundation is situated in Kileleshwa, Nairobi, Kenya. It works in the slums with the intention of helping and educating poor young people. By educating people about the adverse effects of early sexual activity on education and offering necessities like food and sanitary pads, the charity hopes to have a beneficial influence.
+The newest project from the Clemency Foundation aims to provide food and sanitary pads to impoverished kids in Nairobi's slums, as well as educate them about the negative impacts of early sexual engagement on schooling. The organization's mission is to empower and elevate this disadvantaged group in order to improve their future by addressing the urgent need to address their lack of resources and knowledge.
+The Clemency Foundation sees a day when young people living in Nairobi's slums are equipped with all the information, tools, and assistance they need to make wise choices about their education and sexual health. The group works to establish a society in which all people, regardless of their difficult circumstances, have the chance to prosper and realize their full potential.
+The initiative by the Clemency Foundation seeks to address the lack of resources and knowledge among impoverished children in Nairobi's slums about the adverse effects of early sexual engagement on schooling. The initiative aims to provide these young people with the tools they need to prioritize their education and well-being by providing sanitary pads, food, and instructional sessions. The project's effect will be measured via a variety of activities, including instructional sessions, meal and sanitary pad distribution, and the establishment of a comprehensive monitoring and evaluation system. The initiative is anticipated to empower the targeted young and boost their engagement in school and health, which will eventually result in a more resilient and well-equipped community.
+The project is scheduled to commence in January 2024 and conclude in December 2024. The project will take place in the slums of Nairobi, Kenya, where Clemency Foundation is based. The project's primary audience is young people from disadvantaged backgrounds who reside in Nairobi, Kenya's slums. The beneficiaries' demographic attributes mainly include people in the 13–19 age range. The social group is made up of both females and males, and it is probably ethnically varied, reflecting the multicultural makeup of the neighbourhood.
+The project is expected to cost $1 million. This budget will be used for a number of project activities, such as training sessions, meal and sanitary pad distribution, and the establishment of an extensive monitoring and assessment system to gauge the project's effect on the well-being of the targeted adolescent slum dwellers. The initiative will use sponsored tags on the organization's website and social media channels to raise the required funds, which comes to around $1 million. Through the engagement of potential donors and supporters, the Clemency Foundation will be able to raise the necessary funds to carry out the program with the help of these fundraising initiatives.
+If this initiative is effective, it will raise awareness among the young people, who are the target audience in Nairobia's slum, about the negative effects of early sexual engagement on schooling. Furthermore, it will encourage better health, increased involvement in school, and general well-being among the youth living in slums, enabling them to make wise choices for the future.
+---
+
+```{r}
+# importing data
+data <- read.csv("C:/Users/Administrator/Downloads/TEST.csv")
+View(data)
+```
+
+```{r}
+# Data cleaning
+# 1) null values
+summary (is.na(data))
+data=na.omit(data)
+```
+
+```{r}
+# 2) duplicated rows
+duplicated_rows=data[duplicated(data), ]
+View(duplicated_rows)
+data=unique(data)
+View(data)
+
+```
+
+```{r}
+#Exploratory Data Analysis (EDA)
+#Explore the structure of the dataset
+# View the structure of the dataset
+str(data)
+```
+```{r}
+#summary statistics
+summary(data)
+```
+```{r}
+#histogram for age
+hist(data$AGE)
+
+```
+```{r}
+#Scatterplot for ENG Vs MATHS Scores
+plot(data$ENG, data$MATHS)
+```
+
+```{r}
+# Data Analytics
+# Example: Mean scores for each subject
+colMeans(data[, c("ENG", "MATHS", "KISW", "BIO", "CHEM", "PHY", "GEO", "AGRI")])
+```
+```{r}
+# Example: Correlation matrix
+cor(data[, c("AGE", "Days.attended.School", "ENG", "MATHS", "KISW", "BIO", "CHEM", "PHY", "GEO", "AGRI")])
+
+```
+```{r}
+# Create a new column 'Total' with the sum of scores for specified subjects
+data$Total <- rowSums(data[, c("ENG", "MATHS", "KISW", "BIO", "CHEM", "PHY", "GEO", "AGRI")])
+```
+```{r}
+# View the updated dataset with the new 'Total' column
+head(data)
+View(data)
+```
+```{r}
+#Data Visualization
+library(ggplot2)
+ggplot(data, aes(x = AREA, y = ENG)) + geom_boxplot()
+```
+```{r}
+# Create a histogram to visualize the distribution of total scores
+ggplot(data, aes(x = Total)) +
+  geom_histogram(binwidth = 10, fill = "orange", color = "black") +
+  labs(title = "Distribution of Total Scores",
+       x = "Total Scores",
+       y = "Frequency")
+```
+```{r}
+# Create a density plot for total scores
+ggplot(data, aes(x = Total)) +
+  geom_density(fill = "green", color = "black") +
+  labs(title = "Density of Total Scores", x = "Total Scores")
+```
+```{r}
+# Create a bar plot showing average total scores by area
+ggplot(data, aes(x = AREA, y = Total, fill = AREA)) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge") +
+  labs(title = "Average Total Scores by Area", x = "Area", y = "Average Total Scores")
+```
+```{r}
+# Adding a dummy x-axis variable for the violin plot
+data$dummy <- 1  # Creating a dummy variable
+
+# Create a violin plot for total scores
+ggplot(data, aes(x = as.factor(dummy), y = Total)) +
+  geom_violin(fill = "red") +
+  labs(title = "Violin Plot of Total Scores", x = "", y = "Total Scores") +
+  scale_x_discrete(labels = NULL)  # Removing x-axis labels
+```
+```{r}
+# FORECASTING
+# Example: Linear regression to predict English score based on other subjects
+model <- lm(ENG ~ MATHS + KISW + BIO + CHEM + PHY + GEO + AGRI, data = data)
+summary(model)
+```
+```{r}
+# Make predictions
+new_data <- data.frame(MATHS = 60, KISW = 70, BIO = 75, CHEM = 80, PHY = 85, GEO = 90, AGRI = 95) # Example data
+predicted_scores <- predict(model, newdata = new_data)
+View(predicted_scores)
+predicted_scores
+```
+---
+END
+---
